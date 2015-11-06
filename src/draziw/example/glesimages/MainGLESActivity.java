@@ -13,11 +13,7 @@ import android.view.WindowManager;
 
 public class MainGLESActivity extends Activity {
 	private GLSurfaceView mSurfaceView;
-	private GLES20Renderer mRender;
-	
-	private Handler mHandler = new Handler();
-	private Boolean RPause = false;
-	private int FPS = 60;
+	private GLES20Renderer mRender;	
 	
 	public static boolean CAPTURE_VIDEO=false;
 
@@ -60,8 +56,8 @@ public class MainGLESActivity extends Activity {
 		mSurfaceView.setRenderer(mRender);
 
 		// устанавливаем смену кадров по вызову
-		//mSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
-		mSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+		mSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		//mSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
 		// ставим наш glSurfaceView как корневой View активити.
 		setContentView(mSurfaceView);
@@ -97,24 +93,21 @@ public class MainGLESActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mSurfaceView.onPause();
-		RPause = true; // флаг паузы
+		mSurfaceView.onPause();		
+		mSurfaceView.requestRender();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		mSurfaceView.onResume();
-		// флаг паузы
-		RPause = false;
 		// запускаем рендеринг
 
 	}
 
 	@Override
 	protected void onStop() {
-		super.onStop();
-		RPause = true;		
+		super.onStop();		
 	}
 		
 }
